@@ -73,6 +73,8 @@ Included are a few additional (optional) features to allow for completely automa
 
 Take a look at the [demo project](https://github.com/kss-node/kss-node/tree/master/demo) for some examples.
 
+**Separate templates**. If you want to use a different template to generate the sections than you can easily create a section.html in the template folder. This will be used just for generating the sections.
+
 *Overview Document**. This "overview" page is generated from a Markdown file, which you should place in the directory you're generating from, just name it `styleguide.md` and it will be included in the final styleguide automatically.
 
 **HTML Markup**. In `kss-node` you can include sample markup in your styleguide entries. This is not only helpful for newcomers to a project, but is also used by the generator to include samples in your styleguide - just start a paragraph in your description section with `Markup:` like so:
