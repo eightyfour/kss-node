@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+// ./kss-node ../../../../../work/dev/jsf-base-components-trunk/src/main/resources/META-INF/resources/basecomponents/css/ ../../../../../dev/kss/kss-gen/ -t ../../../../kss/kss-node-template/template/ --less ../../../../../work/dev/jsf-base-components-trunk/src/main/resources/META-INF/resources/basecomponents/css/gdx.agg.less
+
 var kss = require(__dirname + '/../lib/kss.js'),
 	preCompiler = kss.precompilers,
 	handlebars = require('handlebars'),
@@ -13,7 +15,7 @@ var kss = require(__dirname + '/../lib/kss.js'),
 	less = require('less'),
 	path = require('path'),
 	fs = require('fs'),
-	template, styleguide,
+	template, sectionTemplate, styleguide,
 	generatePage, generateStylesheet,
 	config = {
 		templateDirectory: __dirname + '/../lib/template',
@@ -129,6 +131,14 @@ console.log('');
 // Compile the Handlebars template
 template = fs.readFileSync(config.templateDirectory + '/index.html', 'utf8');
 template = handlebars.compile(template);
+
+// Compile template for samples so far exists
+if (fs.existsSync(config.templateDirectory + '/section.html')) {
+    sectionTemplate = fs.readFileSync(config.templateDirectory + '/section.html', 'utf8');
+    sectionTemplate = handlebars.compile(sectionTemplate);
+} else {
+    sectionTemplate = template;
+}
 
 // Create a new "styleguide" directory and copy the contents
 // of "public" over.
@@ -282,7 +292,7 @@ generatePage = function(styleguide, sections, root, pages, sectionRoots) {
 		']'
 	);
 	fs.writeFileSync(config.destinationDirectory + '/section-'+root+'.html',
-		template({
+		sectionTemplate({
 			styleguide: styleguide,
 			sections: jsonSections(sections),
 			rootNumber: root,
